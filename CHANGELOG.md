@@ -1,3 +1,10 @@
+## [0.1.4](https://github.com/nubisco/docs-sdk/compare/v0.1.3...v0.1.4) (2026-10-28)
+
+
+### Bug Fixes
+
+* link only the icons and manifest a product ships ([b92caa1](https://github.com/nubisco/docs-sdk/commit/b92caa1adde25e24cf6359254094754d5de48360))
+
 ## [0.1.3](https://github.com/nubisco/docs-sdk/compare/v0.1.2...v0.1.3) (2026-10-28)
 
 
