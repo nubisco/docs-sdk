@@ -21,6 +21,7 @@ export default defineNubiscoDocs({
         items: [
           { text: 'Getting started', link: '/guide/getting-started' },
           { text: 'Writing pages', link: '/guide/writing-pages' },
+          { text: 'Diagrams', link: '/guide/diagrams' },
         ],
       },
       {
