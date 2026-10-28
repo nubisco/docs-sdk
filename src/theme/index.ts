@@ -8,6 +8,12 @@ import Mermaid from '../plugins/mermaid/Mermaid.vue'
 // weight the library wins, as it did in the docs before they were extracted.
 import './custom.css'
 import '@nubisco/ui/styles'
+// The theme's own components render these library components. Their sheets are
+// linked here because the library's Vite plugin only resolves components in the
+// product's files, never in this package.
+import '@nubisco/ui/dist/styles/Badge.css'
+import '@nubisco/ui/dist/styles/Icon.css'
+import '@nubisco/ui/dist/styles/TextInput.css'
 
 /**
  * The Nubisco docs theme: Carbon's structure in the library's own layers. A

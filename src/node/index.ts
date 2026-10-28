@@ -1,4 +1,5 @@
 import { defineConfig, type UserConfig, type DefaultTheme } from 'vitepress'
+import type { Plugin } from 'vite'
 import svgLoader from 'vite-svg-loader'
 import {
   groupIconMdPlugin,
@@ -8,11 +9,33 @@ import { nubiscoUI } from '@nubisco/ui/vite'
 import { fonts } from '@nubisco/ui/plugins/fonts'
 import { tabsMarkdownPlugin } from '../plugins/tabs/markdown'
 import { withMermaid } from '../plugins/mermaid'
+import { fileURLToPath } from 'node:url'
 import type { INubiscoDocsOptions } from './types'
 
 export type { INubiscoDocsOptions, INubiscoDocsThemeConfig } from './types'
 
 const ANALYTICS = 'https://analytics.nubisco.io/script.js'
+
+const EMPTY_SHEET = fileURLToPath(
+  new URL('../src/theme/empty.css', import.meta.url),
+)
+
+/**
+ * The theme links the library's built component sheets (`dist/styles/*.css`).
+ * The library's own docs build from its source, where every component carries
+ * its styles and `dist` may not exist yet, so those imports resolve to an empty
+ * sheet there.
+ */
+function librarySheetsFromSource(): Plugin {
+  return {
+    name: 'nubisco-docs:library-sheets',
+    enforce: 'pre',
+    resolveId(id) {
+      if (/^@nubisco\/ui\/dist\/styles\/[^/]+\.css$/.test(id))
+        return EMPTY_SHEET
+    },
+  }
+}
 
 /**
  * The VitePress config for a Nubisco product's documentation.
@@ -131,7 +154,7 @@ export function defineNubiscoDocs(
         // The theme passes icon modules to NbIcon at run time, which the glyph
         // transform cannot see through. They need no catalogue.
         ...(options.libraryPlugin === false
-          ? []
+          ? [librarySheetsFromSource()]
           : [nubiscoUI({ glyphs: { catalog: 'off', warnUnresolved: false } })]),
         fonts(),
         ...(extra.vite?.plugins ?? []),

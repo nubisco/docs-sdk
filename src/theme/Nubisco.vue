@@ -274,13 +274,51 @@ const editLink = computed(() => {
       letter-spacing: 0;
     }
 
-    :deep(ul),
-    :deep(ol) {
+    /*
+     * Markdown's own lists and links, which carry no class. Links are matched
+     * by where they sit (a paragraph, a prose list, a quote, a prose table) so
+     * that a classless link inside a component is not restyled. The library resets
+     * list markers and link colour globally, and the pages here are prose, so
+     * both are put back. Anything with a class (a component's list, a button
+     * rendered as a link) styles itself and is left alone.
+     */
+    :deep(ul:not([class])),
+    :deep(ol:not([class])) {
       margin-bottom: 1.5em;
+      padding-left: 1.5em;
     }
 
-    :deep(li) {
+    :deep(ul:not([class])) {
+      list-style: disc;
+    }
+
+    :deep(ol:not([class])) {
+      list-style: decimal;
+    }
+
+    :deep(ul:not([class]) > li),
+    :deep(ol:not([class]) > li) {
       margin-bottom: 0.5em;
+    }
+
+    :deep(li::marker) {
+      color: var(--nb-c-text-subtle);
+    }
+
+    :deep(p a:not([class])),
+    :deep(ul:not([class]) > li a:not([class])),
+    :deep(ol:not([class]) > li a:not([class])),
+    :deep(blockquote a:not([class])),
+    :deep(table:not([class*='nb-']) a:not([class])) {
+      color: var(--nb-c-primary);
+      text-decoration: underline;
+      text-decoration-color: color-mix(in srgb, currentColor 40%, transparent);
+      text-underline-offset: 0.2em;
+
+      &:hover {
+        color: var(--nb-c-primary-hover);
+        text-decoration-color: currentColor;
+      }
     }
 
     /* Prose tables only. Component demos render their own tables (NbDataTable,
