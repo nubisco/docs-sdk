@@ -77,3 +77,13 @@ describe('defineNubiscoDocs', () => {
     )
   })
 })
+
+describe('lastUpdated', () => {
+  it('is on unless the product turns it off', () => {
+    expect(defineNubiscoDocs(base).lastUpdated).toBe(true)
+    expect(
+      defineNubiscoDocs({ ...base, vitepress: { lastUpdated: false } })
+        .lastUpdated,
+    ).toBe(false)
+  })
+})

@@ -80,7 +80,9 @@ export function defineNubiscoDocs(
     appearance: false,
     // `_shared.md` fragments are included by tab pages. They are not pages.
     srcExclude: ['**/_*.md', ...(extra.srcExclude ?? [])],
-    lastUpdated: true,
+    // Read from the git log, so a site built where there is no repository (a
+    // container with `.git` excluded) turns it off with `vitepress.lastUpdated`.
+    lastUpdated: extra.lastUpdated ?? true,
     head: [
       ['link', { rel: 'icon', href: `${base}favicon.ico`, sizes: 'any' }],
       [
