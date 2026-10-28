@@ -1,3 +1,10 @@
+## [0.1.5](https://github.com/nubisco/docs-sdk/compare/v0.1.4...v0.1.5) (2026-10-28)
+
+
+### Bug Fixes
+
+* choose the sidebar by the page's path, so a site with one per audience shows the right one ([0d5bd59](https://github.com/nubisco/docs-sdk/commit/0d5bd59d6c7dfa87e8ddd118dd4daa4148c4dc11))
+
 ## [0.1.4](https://github.com/nubisco/docs-sdk/compare/v0.1.3...v0.1.4) (2026-10-28)
 
 
