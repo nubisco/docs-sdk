@@ -1,3 +1,10 @@
+## [0.1.7](https://github.com/nubisco/docs-sdk/compare/v0.1.6...v0.1.7) (2026-10-28)
+
+
+### Bug Fixes
+
+* let a product turn off last-updated where its build has no git ([cdf4494](https://github.com/nubisco/docs-sdk/commit/cdf4494fa28f1dacbea5216290ebde57b2a5cce2))
+
 ## [0.1.6](https://github.com/nubisco/docs-sdk/compare/v0.1.5...v0.1.6) (2026-10-28)
 
 
