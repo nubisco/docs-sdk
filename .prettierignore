@@ -1,0 +1,7 @@
+dist/
+fixture/docs/.vitepress/dist/
+fixture/docs/.vitepress/cache/
+node_modules/
+CHANGELOG.md
+THIRD_PARTY_NOTICES.md
+LICENSE
