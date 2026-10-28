@@ -43,6 +43,12 @@ export interface INubiscoDocsOptions {
   /** Show the Square and Round switch. Component library only. */
   appearanceControl?: boolean
   /**
+   * Resolve `<NbButton>` and `NbIcon` names in Markdown at compile time with
+   * `@nubisco/ui/vite`. On by default. The component library's own docs turn it
+   * off: they register every component globally and link every glyph themselves.
+   */
+  libraryPlugin?: boolean
+  /**
    * Anything else VitePress accepts, merged over the defaults. `vite` and
    * `themeConfig` are merged one level deep, `head` is appended, and a
    * `markdown.config` is called after the SDK's own.

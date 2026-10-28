@@ -29,13 +29,18 @@ export const withMermaid = (config: UserConfig) => {
   if (!config.vite.optimizeDeps) config.vite.optimizeDeps = {}
   if (!config.vite.optimizeDeps.include) config.vite.optimizeDeps.include = []
 
+  // Named through the packages that own them: under pnpm a site cannot import
+  // mermaid's own dependencies, and this package lives in node_modules where
+  // Vite does not scan it, so mermaid has to be pre-bundled explicitly.
+  const via = '@nubisco/docs-sdk > mermaid'
   config.vite.optimizeDeps.include = [
     ...config.vite.optimizeDeps.include,
-    '@braintree/sanitize-url',
-    'dayjs',
-    'debug',
-    'cytoscape-cose-bilkent',
-    'cytoscape',
+    via,
+    `${via} > @braintree/sanitize-url`,
+    `${via} > dayjs`,
+    `${via} > debug`,
+    `${via} > cytoscape-cose-bilkent`,
+    `${via} > cytoscape`,
   ]
   if (!config.vite.resolve) config.vite.resolve = {}
 

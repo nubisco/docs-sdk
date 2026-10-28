@@ -89,7 +89,8 @@
  * cannot give.
  */
 import { computed, ref, watch } from 'vue'
-import { NbIcon, NbTextInput } from '@nubisco/ui'
+import NbIcon from '@nubisco/ui/components/Icon'
+import NbTextInput from '@nubisco/ui/components/TextInput'
 import * as iconSearch from '@nubisco/ui/icons/magnifying-glass'
 import * as iconCaret from '@nubisco/ui/icons/caret-down'
 import { useData, useRoute, withBase } from 'vitepress'

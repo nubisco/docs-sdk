@@ -4,8 +4,10 @@ import { enhanceAppWithTabs } from '../plugins/tabs/components'
 import Layout from './Layout.vue'
 import Nubisco from './Nubisco.vue'
 import Mermaid from '../plugins/mermaid/Mermaid.vue'
-import '@nubisco/ui/styles'
+// The chrome first, the library's styles after it: where the two have equal
+// weight the library wins, as it did in the docs before they were extracted.
 import './custom.css'
+import '@nubisco/ui/styles'
 
 /**
  * The Nubisco docs theme: Carbon's structure in the library's own layers. A

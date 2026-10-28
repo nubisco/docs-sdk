@@ -87,7 +87,7 @@ import { useData, withBase } from 'vitepress'
 import DocHeader from './components/DocHeader.vue'
 import type { IDocHeaderTab } from './components/DocHeader.vue'
 import DocOutline from './components/DocOutline.vue'
-import { NbNubiscoMark } from '@nubisco/ui'
+import NbNubiscoMark from '@nubisco/ui/components/NubiscoMark'
 
 const { frontmatter, page, theme, site } = useData()
 const body = ref<HTMLElement | null>(null)

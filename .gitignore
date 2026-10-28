@@ -3,3 +3,4 @@ dist
 fixture/docs/.vitepress/cache
 fixture/docs/.vitepress/dist
 .DS_Store
+*.tgz

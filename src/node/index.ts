@@ -113,11 +113,26 @@ export function defineNubiscoDocs(
     vite: {
       ...extra.vite,
       plugins: [
-        svgLoader(),
+        // Path merging and conversion off: they distort brand marks and glyph
+        // artwork that the docs import as components.
+        svgLoader({
+          svgoConfig: {
+            plugins: [
+              {
+                name: 'preset-default',
+                params: {
+                  overrides: { convertPathData: false, mergePaths: false },
+                },
+              },
+            ],
+          },
+        }),
         groupIconVitePlugin(),
         // The theme passes icon modules to NbIcon at run time, which the glyph
         // transform cannot see through. They need no catalogue.
-        nubiscoUI({ glyphs: { catalog: 'off', warnUnresolved: false } }),
+        ...(options.libraryPlugin === false
+          ? []
+          : [nubiscoUI({ glyphs: { catalog: 'off', warnUnresolved: false } })]),
         fonts(),
         ...(extra.vite?.plugins ?? []),
       ],

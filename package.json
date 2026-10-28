@@ -20,7 +20,8 @@
       "import": "./dist/index.js"
     },
     "./theme": "./src/theme/index.ts",
-    "./package.json": "./package.json"
+    "./package.json": "./package.json",
+    "./plugins/*": "./src/plugins/*"
   },
   "files": [
     "dist",

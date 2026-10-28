@@ -102,7 +102,10 @@
  */
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 import { useData, useRouter, withBase } from 'vitepress'
-import { NbBadge, NbIcon } from '@nubisco/ui'
+// One import per component, not the library barrel: a barrel would load every
+// component's styles ahead of the host site's own.
+import NbBadge from '@nubisco/ui/components/Badge'
+import NbIcon from '@nubisco/ui/components/Icon'
 import * as iconGithub from '@nubisco/ui/icons/github-logo'
 import * as iconPencil from '@nubisco/ui/icons/pencil-simple'
 import * as iconBug from '@nubisco/ui/icons/bug'
