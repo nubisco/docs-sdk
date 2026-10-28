@@ -1,3 +1,10 @@
+## [0.1.6](https://github.com/nubisco/docs-sdk/compare/v0.1.5...v0.1.6) (2026-10-28)
+
+
+### Bug Fixes
+
+* use the product's SVG mark as the favicon when it ships none ([9883b6a](https://github.com/nubisco/docs-sdk/commit/9883b6a60ff5f672c3c26d5bb91cf603a41e7bbc))
+
 ## [0.1.5](https://github.com/nubisco/docs-sdk/compare/v0.1.4...v0.1.5) (2026-10-28)
 
 
