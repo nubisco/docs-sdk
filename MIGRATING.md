@@ -4,6 +4,11 @@ How to replace a product's own VitePress setup with this package. It was worked 
 moving the `@nubisco/ui` documentation first, which is the hardest case (it builds from
 source, registers every component and has its own demos). A product is simpler.
 
+For a product whose docs are prose with no live demos, which is nearly all of them, the
+reference is `openbridge/apps/docs` (migrated in commit `a44d35f`): twelve guide pages and a
+home page, with the title and first sentence of each page moved into `title` and `intro`
+frontmatter, and a home page rewritten as an ordinary `layout: nubisco` page.
+
 The goal is a site that looks and behaves like the reference, with nothing of the old
 theme left behind and no regressions in what it already did.
 
