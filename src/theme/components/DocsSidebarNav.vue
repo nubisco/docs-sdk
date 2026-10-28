@@ -94,6 +94,7 @@ import NbTextInput from '@nubisco/ui/components/TextInput'
 import * as iconSearch from '@nubisco/ui/icons/magnifying-glass'
 import * as iconCaret from '@nubisco/ui/icons/caret-down'
 import { useData, useRoute, withBase } from 'vitepress'
+import { resolveSidebar } from '../sidebar'
 
 interface IItem {
   text: string
@@ -105,11 +106,9 @@ const { theme, site } = useData()
 const route = useRoute()
 const query = ref('')
 
-const all = computed<IItem[]>(() => {
-  const sidebar = theme.value.sidebar
-  if (Array.isArray(sidebar)) return sidebar
-  return sidebar?.['/'] ?? []
-})
+const all = computed<IItem[]>(() =>
+  resolveSidebar(theme.value.sidebar, normal(route.path)),
+)
 
 /** The path without base, extension or trailing index. */
 function normal(path: string) {

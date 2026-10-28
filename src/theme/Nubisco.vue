@@ -88,6 +88,7 @@ import DocHeader from './components/DocHeader.vue'
 import type { IDocHeaderTab } from './components/DocHeader.vue'
 import DocOutline from './components/DocOutline.vue'
 import NbNubiscoMark from '@nubisco/ui/components/NubiscoMark'
+import { resolveSidebar } from './sidebar'
 
 const { frontmatter, page, theme, site } = useData()
 const body = ref<HTMLElement | null>(null)
@@ -160,20 +161,15 @@ function flattenSidebar(items: any[]): SidebarLink[] {
   return result
 }
 
-const allLinks = computed<SidebarLink[]>(() => {
-  const sidebar = theme.value.sidebar
-  if (!sidebar) return []
-  if (Array.isArray(sidebar)) return flattenSidebar(sidebar)
-  return Object.values(sidebar).flatMap((group: any) =>
-    Array.isArray(group) ? flattenSidebar(group) : [],
-  )
-})
-
 const currentPath = computed(() => {
   return (
     '/' + page.value.relativePath.replace(/\.md$/, '').replace(/\/index$/, '/')
   )
 })
+
+const allLinks = computed<SidebarLink[]>(() =>
+  flattenSidebar(resolveSidebar(theme.value.sidebar, currentPath.value)),
+)
 
 // Every tab of a split page is the same entry in the sidebar, the one that
 // links its first tab, so the footer offers the same neighbours on each.
