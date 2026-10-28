@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "description": "The Nubisco documentation design as a package: VitePress, the theme, the plugins and a config helper, so a product supplies only its content.",
   "license": "MIT",
-  "author": "José Silva <jose@nubisco.io>",
+  "author": "Jos\u00e9 Silva <jose@nubisco.io>",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/nubisco/docs-sdk.git"
@@ -119,5 +119,6 @@
         }
       ]
     ]
-  }
+  },
+  "packageManager": "pnpm@10.33.0"
 }
