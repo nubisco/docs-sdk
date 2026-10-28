@@ -10,6 +10,8 @@ import { fonts } from '@nubisco/ui/plugins/fonts'
 import { tabsMarkdownPlugin } from '../plugins/tabs/markdown'
 import { withMermaid } from '../plugins/mermaid'
 import { fileURLToPath } from 'node:url'
+import { existsSync } from 'node:fs'
+import { join } from 'node:path'
 import type { INubiscoDocsOptions } from './types'
 
 export type { INubiscoDocsOptions, INubiscoDocsThemeConfig } from './types'
@@ -131,6 +133,22 @@ export function defineNubiscoDocs(
         md.use(groupIconMdPlugin as never)
         extra.markdown?.config?.(md)
       },
+    },
+    // The icon and manifest links are the design's, but the files are the
+    // product's. A product that does not ship one gets no link to a 404.
+    async transformHead(ctx) {
+      const own =
+        (extra.transformHead && (await extra.transformHead(ctx))) ?? []
+      const shipped = ctx.head.filter((entry) => {
+        const href = entry[1]?.href
+        if (typeof href !== 'string' || !href.startsWith(base)) return true
+        return existsSync(
+          join(ctx.siteConfig.srcDir, 'public', href.slice(base.length)),
+        )
+      })
+      ctx.head.length = 0
+      ctx.head.push(...shipped)
+      return own
     },
     sitemap: { hostname: options.hostname, ...extra.sitemap },
     vite: {
