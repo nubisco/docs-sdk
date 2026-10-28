@@ -146,6 +146,21 @@ export function defineNubiscoDocs(
           join(ctx.siteConfig.srcDir, 'public', href.slice(base.length)),
         )
       })
+      // No favicon of its own: the mark does the job, when it is an SVG.
+      const hasIcon = shipped.some(
+        (entry) => entry[0] === 'link' && /icon/.test(entry[1]?.rel ?? ''),
+      )
+      const mark = join(ctx.siteConfig.srcDir, 'public', logo)
+      if (!hasIcon && logo.endsWith('.svg') && existsSync(mark)) {
+        shipped.push([
+          'link',
+          {
+            rel: 'icon',
+            type: 'image/svg+xml',
+            href: `${base}${logo.replace(/^\//, '')}`,
+          },
+        ])
+      }
       ctx.head.length = 0
       ctx.head.push(...shipped)
       return own
