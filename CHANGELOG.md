@@ -1,3 +1,10 @@
+## [0.1.2](https://github.com/nubisco/docs-sdk/compare/v0.1.1...v0.1.2) (2026-10-28)
+
+
+### Bug Fixes
+
+* **deps:** move to mermaid 12 and current release tooling ([e987130](https://github.com/nubisco/docs-sdk/commit/e9871301576e58bc4cf0e040c4abf170056ae2ef))
+
 ## [0.1.1](https://github.com/nubisco/docs-sdk/compare/v0.1.0...v0.1.1) (2026-10-28)
 
 

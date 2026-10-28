@@ -1,6 +1,6 @@
 {
   "name": "@nubisco/docs-sdk",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "The Nubisco documentation design as a package: VitePress, the theme, the plugins and a config helper, so a product supplies only its content.",
   "license": "MIT",
   "author": "José Silva <jose@nubisco.io>",
