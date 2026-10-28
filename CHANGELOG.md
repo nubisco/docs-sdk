@@ -1,3 +1,10 @@
+## [0.1.3](https://github.com/nubisco/docs-sdk/compare/v0.1.2...v0.1.3) (2026-10-28)
+
+
+### Bug Fixes
+
+* **theme:** style prose lists and links, and load the sheets the theme's own components need ([0a2a9c0](https://github.com/nubisco/docs-sdk/commit/0a2a9c0f72cbca50fb684a1239fe10f12d8af776))
+
 ## [0.1.2](https://github.com/nubisco/docs-sdk/compare/v0.1.1...v0.1.2) (2026-10-28)
 
 
