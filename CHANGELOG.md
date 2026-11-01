@@ -1,3 +1,10 @@
+# [0.2.0](https://github.com/nubisco/docs-sdk/compare/v0.1.7...v0.2.0) (2026-11-01)
+
+
+### Features
+
+* **config:** let a product with a private repository leave repo out ([bd43521](https://github.com/nubisco/docs-sdk/commit/bd43521784c6c675245a138187557579f8d643ee))
+
 ## [0.1.7](https://github.com/nubisco/docs-sdk/compare/v0.1.6...v0.1.7) (2026-10-28)
 
 
