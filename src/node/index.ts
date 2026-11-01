@@ -225,20 +225,26 @@ export function defineNubiscoDocs(
       logo: { src: logo, width: 24, height: 24 },
       nav: options.nav,
       sidebar: options.sidebar,
-      socialLinks: [
-        { icon: 'github', link: `https://github.com/${options.repo}` },
-      ],
-      editLink: {
-        pattern: `https://github.com/${options.repo}/edit/${branch}/${docsDir}:path`,
-        text: 'Edit this page on GitHub',
-      },
+      // A private repository is left out, and with it every GitHub link: they
+      // would 404 for everyone reading the public site.
+      ...(options.repo
+        ? {
+            socialLinks: [
+              { icon: 'github', link: `https://github.com/${options.repo}` },
+            ],
+            editLink: {
+              pattern: `https://github.com/${options.repo}/edit/${branch}/${docsDir}:path`,
+              text: 'Edit this page on GitHub',
+            },
+          }
+        : {}),
       search: { provider: 'local' },
       lastUpdated: { text: 'Last updated' },
       footer: options.footer,
       ...extra.themeConfig,
       // Read by the theme. Typed in `INubiscoDocsThemeConfig`.
       nubisco: {
-        repo: options.repo,
+        ...(options.repo ? { repo: options.repo } : {}),
         branch,
         appearanceControl: options.appearanceControl ?? false,
       },

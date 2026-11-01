@@ -53,6 +53,10 @@ What the product states is its own: name, address, repository, navigation, foote
 plugins and the Vite plugins are the SDK's. Anything else VitePress accepts goes in the
 `vitepress` option and is merged over the defaults.
 
+A product whose repository is private (closed source) leaves `repo` out. Its public site
+then has no GitHub link in the top bar, no "Edit this page" and no source or issue links in
+the page header, since each of them would 404 for the public.
+
 ## 4. Replace the theme
 
 ```ts

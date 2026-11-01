@@ -65,6 +65,11 @@ import theme from '@nubisco/docs-sdk/theme'
 export default theme
 ```
 
+`repo` is optional. Leave it out for a product whose repository is private: the GitHub link
+in the top bar, "Edit this page" and the page header's source and issue links all point at
+the repository, so they would 404 for every reader of the public site. Without `repo`, none
+of them is rendered.
+
 ```json
 {
   "scripts": {
@@ -76,7 +81,7 @@ export default theme
 
 Pages opt in with `layout: nubisco` in frontmatter. The fields the layout reads are
 `title`, `intro` (one paragraph of inline Markdown), `status` (`stable`, `beta`, `labs`...),
-`source` (a path in the repository, for the source link) and, for a page with facets,
+`source` (a path in the repository, for the source link, ignored without `repo`) and, for a page with facets,
 `pageTabs` plus `tab`.
 
 The `fixture/` folder is a complete small site that uses the package exactly as above. It is

@@ -40,6 +40,26 @@ describe('defineNubiscoDocs', () => {
     })
   })
 
+  it('renders no GitHub link at all for a product whose repository is private', () => {
+    const { repo: _repo, ...closed } = base
+    const config = defineNubiscoDocs(closed)
+    const theme = config.themeConfig as any
+    expect(theme.socialLinks).toBeUndefined()
+    expect(theme.editLink).toBeUndefined()
+    expect(theme.nubisco).toEqual({
+      branch: 'master',
+      appearanceControl: false,
+    })
+    expect(JSON.stringify(config.themeConfig)).not.toContain('github.com')
+  })
+
+  it('links to the repository when there is one', () => {
+    const theme = defineNubiscoDocs(base).themeConfig as any
+    expect(theme.socialLinks).toEqual([
+      { icon: 'github', link: 'https://github.com/nubisco/acta' },
+    ])
+  })
+
   it('keeps the Square and Round switch for the component library only', () => {
     expect(
       (

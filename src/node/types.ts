@@ -2,7 +2,10 @@ import type { DefaultTheme, UserConfig } from 'vitepress'
 
 /** What the Nubisco theme reads from `themeConfig.nubisco`. */
 export interface INubiscoDocsThemeConfig {
-  /** `owner/name` on GitHub. Drives the source and issue links in the page header. */
+  /**
+   * `owner/name` on GitHub. Drives the source and issue links in the page
+   * header. Absent for a product whose repository is private.
+   */
   repo?: string
   /** The branch the source links point at. Defaults to `master`. */
   branch?: string
@@ -22,11 +25,18 @@ export interface INubiscoDocsOptions {
   base: string
   /** The public address of the site, for the sitemap: `https://docs.nubisco.io/acta/`. */
   hostname: string
-  /** `owner/name` on GitHub: `nubisco/acta`. */
-  repo: string
-  /** Branch the edit and source links point at. Defaults to `master`. */
+  /**
+   * `owner/name` on GitHub: `nubisco/acta`. Drives the GitHub link in the top
+   * bar, "Edit this page" and the source and issue links in the page header.
+   *
+   * Leave it out for a product whose repository is private. Those links would
+   * 404 for every reader of the public site, so without `repo` none of them is
+   * rendered.
+   */
+  repo?: string
+  /** Branch the edit and source links point at. Defaults to `master`. Unused without `repo`. */
   branch?: string
-  /** Folder of the docs inside the repository, for the edit link. Defaults to `docs/`. */
+  /** Folder of the docs inside the repository, for the edit link. Defaults to `docs/`. Unused without `repo`. */
   docsDir?: string
   /** Path of the product's mark under `public/`. Defaults to `/logo.svg`. */
   logo?: string
