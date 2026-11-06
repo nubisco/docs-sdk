@@ -134,7 +134,7 @@ const headerTabs = computed<IDocHeaderTab[]>(() => {
     const ext = site.value.cleanUrls ? '' : '.html'
     return routeTabs.map((key) => ({
       key,
-      label: TAB_LABEL[key] ?? key,
+      label: TAB_LABEL[key] ?? key.charAt(0).toUpperCase() + key.slice(1),
       href: withBase(`${tabDir.value}/${key}${ext}`),
       active: key === frontmatter.value.tab,
     }))

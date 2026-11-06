@@ -18,9 +18,25 @@ const root =
 
 async function main() {
   if (command === 'dev') {
-    const server = await createServer(root, { port })
-    await server.listen()
-    server.printUrls()
+    // VitePress disposes its code highlighter when a file the config imports
+    // changes, then calls this restart hook. Without one the server keeps
+    // running on a disposed highlighter, and every page it has not rendered
+    // yet fails with "Shiki instance has been disposed".
+    let restarting: Promise<void> | undefined
+    const start = async (): Promise<void> => {
+      const server = await createServer(root, { port }, () => {
+        restarting ??= (async () => {
+          await server.close()
+          await start()
+        })().finally(() => {
+          restarting = undefined
+        })
+        return restarting
+      })
+      await server.listen()
+      server.printUrls()
+    }
+    await start()
   } else if (command === 'build') {
     await build(root)
   } else if (command === 'preview') {
