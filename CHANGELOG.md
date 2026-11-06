@@ -1,3 +1,10 @@
+## [0.2.2](https://github.com/nubisco/docs-sdk/compare/v0.2.1...v0.2.2) (2026-11-06)
+
+
+### Bug Fixes
+
+* **tabs:** find tabs by name as well as identity, so a second copy of ContentTab still registers ([530a5b3](https://github.com/nubisco/docs-sdk/commit/530a5b3b65d01fb2be86979bbed7e29be286bf1e))
+
 ## [0.2.1](https://github.com/nubisco/docs-sdk/compare/v0.2.0...v0.2.1) (2026-11-06)
 
 
