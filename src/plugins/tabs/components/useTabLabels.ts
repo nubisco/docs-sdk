@@ -10,9 +10,20 @@ export function useTabLabels(): Ref<string[]> {
       return []
     }
 
-    return defaultSlot
-      .filter((vnode) => vnode.type === ContentTab && vnode.props)
-      .map((vnode) => vnode.props?.label)
+    return (
+      defaultSlot
+        // By name as well as identity: a page that imports ContentTab by path
+        // can load a second copy of the module, and identity alone would then
+        // find no tabs at all.
+        .filter(
+          (vnode) =>
+            (vnode.type === ContentTab ||
+              (vnode.type as { __name?: string } | null)?.__name ===
+                'ContentTab') &&
+            vnode.props,
+        )
+        .map((vnode) => vnode.props?.label)
+    )
   })
   return tabLabels
 }
