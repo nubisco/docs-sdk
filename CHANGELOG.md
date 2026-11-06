@@ -1,3 +1,10 @@
+## [0.2.1](https://github.com/nubisco/docs-sdk/compare/v0.2.0...v0.2.1) (2026-11-06)
+
+
+### Bug Fixes
+
+* **cli:** restart the dev server when the config changes ([d6613d4](https://github.com/nubisco/docs-sdk/commit/d6613d4b2857a27f40735a9f6a85eef755300cbd))
+
 # [0.2.0](https://github.com/nubisco/docs-sdk/compare/v0.1.7...v0.2.0) (2026-11-01)
 
 
