@@ -1,3 +1,10 @@
+# [0.3.0](https://github.com/nubisco/docs-sdk/compare/v0.2.2...v0.3.0) (2026-11-10)
+
+
+### Features
+
+* serve every page at its clean address by default ([#2](https://github.com/nubisco/docs-sdk/issues/2)) ([f2807b1](https://github.com/nubisco/docs-sdk/commit/f2807b15c77aa7810f628927ac59362621a7c0e9)), closes [nubisco/gateway#1](https://github.com/nubisco/gateway/issues/1)
+
 ## [0.2.2](https://github.com/nubisco/docs-sdk/compare/v0.2.1...v0.2.2) (2026-11-06)
 
 
