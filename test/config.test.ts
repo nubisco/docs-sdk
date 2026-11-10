@@ -20,8 +20,17 @@ describe('defineNubiscoDocs', () => {
     expect(config.base).toBe('/acta/')
     expect(config.appearance).toBe(false)
     expect(config.lastUpdated).toBe(true)
+    expect(config.cleanUrls).toBe(true)
     expect(config.sitemap?.hostname).toBe('https://docs.nubisco.io/acta/')
     expect(config.themeConfig?.search).toEqual({ provider: 'local' })
+  })
+
+  it('lets a product turn clean URLs off', () => {
+    const config = defineNubiscoDocs({
+      ...base,
+      vitepress: { cleanUrls: false },
+    })
+    expect(config.cleanUrls).toBe(false)
   })
 
   it('derives the edit link and the theme config from the repository', () => {

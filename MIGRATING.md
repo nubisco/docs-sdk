@@ -49,7 +49,7 @@ export default defineNubiscoDocs({
 ```
 
 What the product states is its own: name, address, repository, navigation, footer. Favicons,
-`theme-color`, analytics, search, the edit link, `lastUpdated`, the sitemap, the Markdown
+`theme-color`, analytics, search, the edit link, `lastUpdated`, clean URLs, the sitemap, the Markdown
 plugins and the Vite plugins are the SDK's. Anything else VitePress accepts goes in the
 `vitepress` option and is merged over the defaults.
 

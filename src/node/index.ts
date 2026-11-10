@@ -83,6 +83,12 @@ export function defineNubiscoDocs(
     // Read from the git log, so a site built where there is no repository (a
     // container with `.git` excluded) turns it off with `vitepress.lastUpdated`.
     lastUpdated: extra.lastUpdated ?? true,
+    // One address per page: /page, never also /page.html. GitHub Pages serves
+    // both with a 200, which splits page stats and doubles every page for
+    // search engines, so links, search and the sitemap use the clean form and
+    // the gateway in front of docs.nubisco.io 301s the other. A site served
+    // somewhere that cannot resolve /page to page.html turns it off.
+    cleanUrls: extra.cleanUrls ?? true,
     head: [
       ['link', { rel: 'icon', href: `${base}favicon.ico`, sizes: 'any' }],
       [
