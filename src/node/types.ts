@@ -59,6 +59,11 @@ export interface INubiscoDocsOptions {
    */
   libraryPlugin?: boolean
   /**
+   * Write `search-headings.json` (every page's title and headings) next to the
+   * built site, for search outside the site such as the docs hub. On by default.
+   */
+  headingsIndex?: boolean
+  /**
    * Anything else VitePress accepts, merged over the defaults. `vite` and
    * `themeConfig` are merged one level deep, `head` is appended, and a
    * `markdown.config` is called after the SDK's own.

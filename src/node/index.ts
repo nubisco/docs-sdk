@@ -13,8 +13,15 @@ import { fileURLToPath } from 'node:url'
 import { existsSync } from 'node:fs'
 import { join } from 'node:path'
 import type { INubiscoDocsOptions } from './types'
+import { writeHeadingsIndex } from './headings'
 
 export type { INubiscoDocsOptions, INubiscoDocsThemeConfig } from './types'
+export {
+  HEADINGS_FILE,
+  type IHeadingsIndex,
+  type IPageEntry,
+  type IHeadingEntry,
+} from './headings'
 
 const ANALYTICS = 'https://analytics.nubisco.io/script.js'
 
@@ -172,6 +179,19 @@ export function defineNubiscoDocs(
       ctx.head.length = 0
       ctx.head.push(...shipped)
       return own
+    },
+    // Titles and headings at a fixed address, for search that lives outside
+    // the site (the docs hub on nubisco.io). See `headings.ts`.
+    async buildEnd(siteConfig) {
+      if (options.headingsIndex !== false) {
+        await writeHeadingsIndex({
+          outDir: siteConfig.outDir,
+          base,
+          site: options.title,
+          cleanUrls: siteConfig.cleanUrls ?? true,
+        })
+      }
+      await extra.buildEnd?.(siteConfig)
     },
     sitemap: { hostname: options.hostname, ...extra.sitemap },
     vite: {
