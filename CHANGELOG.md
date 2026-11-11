@@ -1,3 +1,10 @@
+## [0.3.1](https://github.com/nubisco/docs-sdk/compare/v0.3.0...v0.3.1) (2026-11-11)
+
+
+### Bug Fixes
+
+* keep the header on screen below desktop width ([3e4f378](https://github.com/nubisco/docs-sdk/commit/3e4f378132517e9ce0da740cf1368dd1b6d2a03f))
+
 # [0.3.0](https://github.com/nubisco/docs-sdk/compare/v0.2.2...v0.3.0) (2026-11-10)
 
 
