@@ -197,6 +197,20 @@ div[class*='language-'] {
 }
 
 /*
+ * A code group's tab bar sits on the block below it, at every width. Below
+ * 640px VitePress pulls the bar out by -24px each side to bleed into its own
+ * 24px gutter. This theme's phone gutter is 16px and its code blocks do not
+ * bleed, so the bar stuck 8px past the screen, widened the page and no longer
+ * lined up with its block. These are the values VitePress already uses from
+ * 640px up, so a desktop is unchanged.
+ */
+.vp-code-group .tabs {
+  margin-right: 0;
+  margin-left: 0;
+  border-radius: 8px 8px 0 0;
+}
+
+/*
  * Shiki emits inline `color` on every token from the light palette, so the
  * code itself has to be told about the dark ground or it stays near-black on
  * near-black. VitePress ships a dark token set; this points at it.
