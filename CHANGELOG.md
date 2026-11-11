@@ -1,3 +1,10 @@
+# [0.4.0](https://github.com/nubisco/docs-sdk/compare/v0.3.1...v0.4.0) (2026-11-11)
+
+
+### Features
+
+* write search-headings.json, every page's title and headings at a fixed address ([#3](https://github.com/nubisco/docs-sdk/issues/3)) ([29aadf8](https://github.com/nubisco/docs-sdk/commit/29aadf887ba102b02b7ba625dfda9a9a68e9328a))
+
 ## [0.3.1](https://github.com/nubisco/docs-sdk/compare/v0.3.0...v0.3.1) (2026-11-11)
 
 
