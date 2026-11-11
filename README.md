@@ -22,6 +22,12 @@
 - **A config helper.** `defineNubiscoDocs` sets everything the design fixes. You state
   your name, address, repository, navigation and footer.
 - **A CLI.** `nubisco-docs dev | build | preview`.
+- **Files for search and AI assistants, written on every build.** `sitemap.xml`,
+  `search-headings.json` (every page's title and headings, which the docs hub at
+  nubisco.io/docs searches), `llms.txt` (every page as a link with its summary) and
+  `llms-full.txt` (every page's Markdown, demos and scripts left out). Turn one off with
+  `headingsIndex: false` or `llms: false`, or keep a page out of the llms files with
+  `llms: false` in its frontmatter.
 
 ## Install
 
