@@ -14,6 +14,7 @@ import { existsSync } from 'node:fs'
 import { join } from 'node:path'
 import type { INubiscoDocsOptions } from './types'
 import { writeHeadingsIndex } from './headings'
+import { writeLlms } from './llms'
 
 export type { INubiscoDocsOptions, INubiscoDocsThemeConfig } from './types'
 export {
@@ -189,6 +190,20 @@ export function defineNubiscoDocs(
           base,
           site: options.title,
           cleanUrls: siteConfig.cleanUrls ?? true,
+        })
+      }
+      // A map and the full text for AI assistants. See `llms.ts`.
+      if (options.llms !== false) {
+        await writeLlms({
+          outDir: siteConfig.outDir,
+          srcDir: siteConfig.srcDir,
+          pages: siteConfig.pages ?? [],
+          rewrites: siteConfig.rewrites?.map,
+          base,
+          hostname: options.hostname,
+          cleanUrls: siteConfig.cleanUrls ?? true,
+          title: options.title,
+          description: options.description,
         })
       }
       await extra.buildEnd?.(siteConfig)

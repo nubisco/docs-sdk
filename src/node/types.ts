@@ -64,6 +64,13 @@ export interface INubiscoDocsOptions {
    */
   headingsIndex?: boolean
   /**
+   * Write `llms.txt` (every page as a link with its summary) and
+   * `llms-full.txt` (every page's Markdown) next to the built site, for AI
+   * assistants. On by default. A page leaves both with `llms: false` in its
+   * frontmatter.
+   */
+  llms?: boolean
+  /**
    * Anything else VitePress accepts, merged over the defaults. `vite` and
    * `themeConfig` are merged one level deep, `head` is appended, and a
    * `markdown.config` is called after the SDK's own.
