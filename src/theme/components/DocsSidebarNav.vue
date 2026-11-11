@@ -208,6 +208,14 @@ function toggle(group: IItem) {
     color: var(--nb-c-text-subtle);
   }
 
+  // From @nubisco/ui 5.49 the leading slot sits in .nb-text-input__leading,
+  // which pads it to where the text starts. The margin above is for older
+  // versions, and on 5.49 it would double the gap. Remove both when the peer
+  // range starts at 5.49.
+  :deep(.nb-text-input__leading) .docs-sidenav__find-icon {
+    margin-left: 0;
+  }
+
   &__empty {
     margin: var(--nb-base-unit) 0;
     font-size: 0.875rem;
