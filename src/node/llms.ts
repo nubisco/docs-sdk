@@ -74,6 +74,20 @@ const FENCE = /^[ \t]*(`{3,}|~{3,})/
  * ```vue example is the point of the example.
  */
 export function cleanMarkdown(body: string): string {
+  return fences(body)
+    .map(({ code, text }) => {
+      if (code) return text
+      let out = text
+      for (const re of BROWSER_ONLY) out = out.replace(re, '')
+      return out.replace(/\n{3,}/g, '\n\n')
+    })
+    .join('\n')
+    .replace(/\n{3,}/g, '\n\n')
+    .trim()
+}
+
+/** The body cut into prose and fenced code, in order. */
+function fences(body: string): { code: boolean; text: string }[] {
   const segments: { code: boolean; text: string }[] = []
   let fence = ''
   let buf: string[] = []
@@ -100,15 +114,59 @@ export function cleanMarkdown(body: string): string {
   }
   flush(!!fence)
   return segments
-    .map(({ code, text }) => {
-      if (code) return text
-      let out = text
-      for (const re of BROWSER_ONLY) out = out.replace(re, '')
-      return out.replace(/\n{3,}/g, '\n\n')
+}
+
+// A Markdown link or image target: `](target)` or `](target "title")`.
+const LINK = /\]\(\s*(<[^>]*>|[^)\s]+)((?:\s+(?:"[^"]*"|'[^']*'))?\s*)\)/g
+// Inline code, which is left exactly as written.
+const CODE_SPAN = /(`+)[\s\S]*?\1/g
+
+/**
+ * Every Markdown link made absolute, the way the site resolves it.
+ *
+ * On the site VitePress puts the base in front of `/export` and resolves
+ * `./export.md` against the page, so both reach the page. Read as text, away
+ * from the site, they would point at the host's root or at nothing. A link
+ * with a scheme, a bare `#anchor` and anything in code are left alone.
+ */
+export function absoluteLinks(
+  text: string,
+  page: string,
+  opts: { base: string; cleanUrls: boolean },
+): string {
+  const resolve = (raw: string): string => {
+    const angled = raw.startsWith('<') && raw.endsWith('>')
+    const target = angled ? raw.slice(1, -1) : raw
+    if (!target || target.startsWith('#') || /^[a-z][a-z\d+.-]*:/i.test(target))
+      return raw
+    const hash = target.indexOf('#')
+    let path = hash < 0 ? target : target.slice(0, hash)
+    const anchor = hash < 0 ? '' : target.slice(hash)
+    path = path.replace(/\.(md|html)$/, opts.cleanUrls ? '' : '.html')
+    if (path.endsWith('/index')) path = path.slice(0, -'index'.length)
+    if (path.startsWith('/') && !path.startsWith(opts.base))
+      path = opts.base + path.slice(1)
+    const url = new URL(path + anchor, page).href
+    return angled ? `<${url}>` : url
+  }
+  const links = (s: string) =>
+    s.replace(
+      LINK,
+      (_, target: string, title: string) => `](${resolve(target)}${title})`,
+    )
+  return fences(text)
+    .map(({ code, text: t }) => {
+      if (code) return t
+      // Inline code spans pass through untouched, the prose between them is resolved.
+      let out = ''
+      let last = 0
+      for (const m of t.matchAll(CODE_SPAN)) {
+        out += links(t.slice(last, m.index)) + m[0]
+        last = m.index! + m[0].length
+      }
+      return out + links(t.slice(last))
     })
     .join('\n')
-    .replace(/\n{3,}/g, '\n\n')
-    .trim()
 }
 
 const INCLUDE = /<!--\s*@include:\s*([^\s]+?)\s*-->/g
@@ -147,6 +205,18 @@ function sectionOf(path: string, site: string): string {
     .join(' ')
 }
 
+/**
+ * A name for a page with no title and no h1: the site's own name for the home
+ * page (often a hero layout), the folder or file name read as words otherwise.
+ */
+function untitled(page: string, site?: string): string {
+  const path = page.replace(/\.md$/, '').replace(/(^|\/)index$/, '')
+  const last = path.split('/').filter(Boolean).pop()
+  if (!last) return site || 'Home'
+  const words = last.replace(/[-_]+/g, ' ').trim()
+  return words[0].toUpperCase() + words.slice(1)
+}
+
 export async function collectLlmsPages(opts: {
   srcDir: string
   /** Source pages relative to `srcDir`, as VitePress lists them. */
@@ -156,6 +226,8 @@ export async function collectLlmsPages(opts: {
   base: string
   hostname: string
   cleanUrls: boolean
+  /** The site's name, for a home page that has no title of its own. */
+  title?: string
 }): Promise<ILlmsPage[]> {
   const origin = new URL(opts.hostname).origin
   const out: ILlmsPage[] = []
@@ -165,14 +237,23 @@ export async function collectLlmsPages(opts: {
     if (data.llms === 'false') continue
     const served = (opts.rewrites?.[page] ?? page).replace(/\.md$/, '.html')
     const urlPath = pageUrl(served, opts.base, opts.cleanUrls)
-    const text = cleanMarkdown(await resolveIncludes(body, file))
+    const url = origin + urlPath
+    const linked = { base: opts.base, cleanUrls: opts.cleanUrls }
+    const text = absoluteLinks(
+      cleanMarkdown(await resolveIncludes(body, file)),
+      url,
+      linked,
+    )
     const heading = /^#\s+(.+)$/m.exec(text)?.[1]?.trim()
-    const name = data.title || heading || page.replace(/\.md$/, '')
+    const name = data.title || heading || untitled(page, opts.title)
     // Tabs are one page each and share a title: "Button, code".
     const title = data.tab ? `${name}, ${data.tab}` : name
-    const description = data.description || data.intro || undefined
+    const summary = data.description || data.intro
+    const description = summary
+      ? absoluteLinks(summary, url, linked)
+      : undefined
     out.push({
-      url: origin + urlPath,
+      url,
       path: urlPath.slice(opts.base.length).replace(/\/$/, ''),
       title,
       ...(description ? { description } : {}),

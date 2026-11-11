@@ -3,6 +3,7 @@ import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { afterEach, describe, expect, it } from 'vitest'
 import {
+  absoluteLinks,
   cleanMarkdown,
   collectLlmsPages,
   LLMS_FILE,
@@ -252,6 +253,69 @@ describe('cleanMarkdown and odd end tags', () => {
     )
     expect(cleanMarkdown('A\n\n<style>\nx\n</style\tfoo="bar">\n\nB')).toBe(
       'A\n\nB',
+    )
+  })
+})
+
+describe('absoluteLinks', () => {
+  const page = 'https://docs.nubisco.io/doodloop/guide/frames'
+  const opts = { base: '/doodloop/', cleanUrls: true }
+
+  it('resolves root, relative and .md links the way the site does', () => {
+    expect(
+      absoluteLinks(
+        'See [export](/export), [grid](./grid.md#size), [up](../faq) and [home](/).',
+        page,
+        opts,
+      ),
+    ).toBe(
+      'See [export](https://docs.nubisco.io/doodloop/export), [grid](https://docs.nubisco.io/doodloop/guide/grid#size), [up](https://docs.nubisco.io/doodloop/faq) and [home](https://docs.nubisco.io/doodloop/).',
+    )
+  })
+
+  it('leaves external links, anchors, code and already-based links alone', () => {
+    const text = [
+      '[a](https://semver.org/) [b](mailto:x@y.z) [c](#top) [d](/doodloop/files)',
+      '`[e](/inline)`',
+      '```md',
+      '[f](/fenced)',
+      '```',
+    ].join('\n')
+    expect(absoluteLinks(text, page, opts)).toBe(
+      text.replace(
+        '(/doodloop/files)',
+        '(https://docs.nubisco.io/doodloop/files)',
+      ),
+    )
+  })
+
+  it('keeps .html when the site does not use clean URLs', () => {
+    expect(
+      absoluteLinks('[x](/export.md)', page, { ...opts, cleanUrls: false }),
+    ).toBe('[x](https://docs.nubisco.io/doodloop/export.html)')
+  })
+})
+
+describe('collectLlmsPages and untitled pages', () => {
+  it('names an untitled home page after the site and resolves summary links', async () => {
+    dir = await mkdtemp(join(tmpdir(), 'llms-'))
+    await mkdir(join(dir, 'src', 'guides'), { recursive: true })
+    await writeFile(join(dir, 'src', 'index.md'), '---\nlayout: home\n---\n')
+    await writeFile(
+      join(dir, 'src', 'guides', 'index.md'),
+      "---\nintro: 'Read [export](/export) first.'\n---\nText.\n",
+    )
+    const pages = await collectLlmsPages({
+      srcDir: join(dir, 'src'),
+      pages: ['index.md', 'guides/index.md'],
+      base: '/acta/',
+      hostname: site.hostname,
+      cleanUrls: true,
+      title: 'Acta',
+    })
+    expect(pages.map((p) => p.title)).toEqual(['Guides', 'Acta'])
+    expect(pages[0].description).toBe(
+      'Read [export](https://docs.nubisco.io/acta/export) first.',
     )
   })
 })
