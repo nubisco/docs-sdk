@@ -1,3 +1,10 @@
+## [0.5.2](https://github.com/nubisco/docs-sdk/compare/v0.5.1...v0.5.2) (2026-11-11)
+
+
+### Bug Fixes
+
+* **theme:** keep a code group's tab bar on its block on a phone ([c4bb043](https://github.com/nubisco/docs-sdk/commit/c4bb04302b219daf6cf251b1b0c21e594f307d39))
+
 ## [0.5.1](https://github.com/nubisco/docs-sdk/compare/v0.5.0...v0.5.1) (2026-11-11)
 
 
