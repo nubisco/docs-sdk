@@ -50,10 +50,25 @@ const ENTITIES: Record<string, string> = {
   nbsp: ' ',
 }
 
-/** Markup to plain text: tags dropped, entities decoded, whitespace folded. */
+/**
+ * Markup to plain text: tags dropped, entities decoded, whitespace folded.
+ *
+ * Tags are dropped until none is left, because one pass over `<a<b>>` leaves a
+ * tag behind. Entities are decoded after that, so a heading that names a
+ * component (`&lt;NbCard&gt;`) keeps its text. The result is text, and every
+ * reader must show it as text.
+ */
+export function stripTags(html: string): string {
+  let out = html
+  for (;;) {
+    const next = out.replace(/<[^<>]*>/g, '')
+    if (next === out) return next
+    out = next
+  }
+}
+
 export function toText(html: string): string {
-  return html
-    .replace(/<[^>]*>/g, '')
+  return stripTags(html)
     .replace(/&(#x[0-9a-f]+|#\d+|[a-z]+);/gi, (whole, code: string) => {
       if (code[0] === '#') {
         const n =

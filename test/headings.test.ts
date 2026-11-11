@@ -27,6 +27,14 @@ const page = `<!DOCTYPE html><html><head>
 </body></html>`
 
 describe('toText', () => {
+  it('leaves no tag behind when tags are nested', () => {
+    expect(toText('a<scr<b>ipt>b</scr</b>ipt>c')).toBe('abc')
+  })
+
+  it('keeps a component name written as entities', () => {
+    expect(toText('The &lt;NbCard&gt; API')).toBe('The <NbCard> API')
+  })
+
   it('drops tags, decodes entities and folds whitespace', () => {
     expect(toText('<code>a</code> &amp;  b &quot;c&quot; &#39;d&#x27; ​')).toBe(
       `a & b "c" 'd'`,
