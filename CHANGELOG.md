@@ -1,3 +1,10 @@
+## [0.4.1](https://github.com/nubisco/docs-sdk/compare/v0.4.0...v0.4.1) (2026-11-11)
+
+
+### Bug Fixes
+
+* **sidenav:** no extra find-icon margin once @nubisco/ui pads the leading slot ([#4](https://github.com/nubisco/docs-sdk/issues/4)) ([d218198](https://github.com/nubisco/docs-sdk/commit/d21819873f1c6f7b8f12a598388b3b4d9f596310))
+
 # [0.4.0](https://github.com/nubisco/docs-sdk/compare/v0.3.1...v0.4.0) (2026-11-11)
 
 
