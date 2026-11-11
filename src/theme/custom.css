@@ -549,3 +549,30 @@ div[class*='language-']:hover .has-focused-lines .line:not(.has-focus) {
 .VPNavBar .content-body > .VPSocialLinks {
   margin-left: 16px;
 }
+
+/* ─── Header below desktop width: the title gives way ────────────────────── */
+/*
+ * The bar is a flex row and VitePress does not let its title shrink. A long
+ * product name ("OpenBridge WiZ Local Platform") pushed the rest of the bar
+ * past the right edge below 960px: on a phone the menu button went off screen,
+ * so the sidebar could not be opened, and on a tablet the switches did. The
+ * title shrinks instead and ends in an ellipsis. From 960px up the title has
+ * its own column and nothing changes there.
+ */
+@media (max-width: 959px) {
+  .VPNavBar .container > .title {
+    flex-shrink: 1;
+    min-width: 0;
+  }
+
+  .VPNavBar .VPNavBarTitle .title {
+    min-width: 0;
+  }
+
+  .VPNavBar .VPNavBarTitle .title > span {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
