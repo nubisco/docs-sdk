@@ -244,3 +244,14 @@ describe('cleanMarkdown and code', () => {
     expect(out).toContain('Then </style> in prose.')
   })
 })
+
+describe('cleanMarkdown and odd end tags', () => {
+  it('ends a block at an end tag with spaces or attributes in it', () => {
+    expect(cleanMarkdown('A\n\n<script setup>\nx\n</script >\n\nB')).toBe(
+      'A\n\nB',
+    )
+    expect(cleanMarkdown('A\n\n<style>\nx\n</style\tfoo="bar">\n\nB')).toBe(
+      'A\n\nB',
+    )
+  })
+})

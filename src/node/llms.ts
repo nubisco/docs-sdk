@@ -60,9 +60,9 @@ export function splitFrontmatter(source: string): {
 // shown in a fenced block beside it anyway. Only a block that starts a line
 // counts, so prose that names a tag (`the <style> block`) stays.
 const BROWSER_ONLY = [
-  /^[ \t]*<script\b[^>]*>[\s\S]*?<\/script>[ \t]*$/gim,
-  /^[ \t]*<style\b[^>]*>[\s\S]*?<\/style>[ \t]*$/gim,
-  /^[ \t]*<preview\b[^>]*>[\s\S]*?<\/preview>[ \t]*$/gim,
+  /^[ \t]*<script\b[^>]*>[\s\S]*?<\/script\b[^>]*>[ \t]*$/gim,
+  /^[ \t]*<style\b[^>]*>[\s\S]*?<\/style\b[^>]*>[ \t]*$/gim,
+  /^[ \t]*<preview\b[^>]*>[\s\S]*?<\/preview\b[^>]*>[ \t]*$/gim,
   /^[ \t]*<preview\b[^>]*\/>[ \t]*$/gim,
 ]
 
