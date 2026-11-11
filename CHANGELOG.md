@@ -1,3 +1,10 @@
+# [0.5.0](https://github.com/nubisco/docs-sdk/compare/v0.4.1...v0.5.0) (2026-11-11)
+
+
+### Features
+
+* **llms:** write llms.txt and llms-full.txt on every build ([#5](https://github.com/nubisco/docs-sdk/issues/5)) ([befcdf3](https://github.com/nubisco/docs-sdk/commit/befcdf3cebfa709688d51ad8798d25d2fbc642ef))
+
 ## [0.4.1](https://github.com/nubisco/docs-sdk/compare/v0.4.0...v0.4.1) (2026-11-11)
 
 
