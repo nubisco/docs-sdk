@@ -24,7 +24,11 @@ export const LLMS_FULL_FILE = 'llms-full.txt'
 export interface ILlmsPage {
   /** Absolute, canonical address. */
   url: string
-  /** Path under the base, for grouping and sorting: `users/goals`. */
+  /**
+   * Path under the base, for grouping: `users/goals`. A folder's own page
+   * keeps its slash (`users/`), so it is grouped with its folder rather than
+   * read as a page at the root.
+   */
   path: string
   title: string
   description?: string
@@ -254,7 +258,7 @@ export async function collectLlmsPages(opts: {
       : undefined
     out.push({
       url,
-      path: urlPath.slice(opts.base.length).replace(/\/$/, ''),
+      path: urlPath.slice(opts.base.length),
       title,
       ...(description ? { description } : {}),
       body: text,
