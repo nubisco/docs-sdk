@@ -1,3 +1,10 @@
+## [0.5.3](https://github.com/nubisco/docs-sdk/compare/v0.5.2...v0.5.3) (2026-11-12)
+
+
+### Bug Fixes
+
+* **llms:** a folder's own page is filed under its folder ([#6](https://github.com/nubisco/docs-sdk/issues/6)) ([dea426b](https://github.com/nubisco/docs-sdk/commit/dea426be1fce18ca94c90b05756f2e685bbf5108))
+
 ## [0.5.2](https://github.com/nubisco/docs-sdk/compare/v0.5.1...v0.5.2) (2026-11-11)
 
 
