@@ -175,6 +175,29 @@ describe('renderLlms', () => {
     expect(order).toEqual(['Overview', 'Users', 'Developers'])
     expect(text).toContain('- [Acta](https://d/acta/): Start here.')
   })
+
+  it("files a folder's own page under its folder, not the root", () => {
+    const text = renderLlms(site, [
+      { url: 'https://d/acta/', path: '', title: 'Acta', body: '' },
+      {
+        url: 'https://d/acta/developers/',
+        path: 'developers/',
+        title: 'Quick start',
+        body: '',
+      },
+      {
+        url: 'https://d/acta/developers/arch',
+        path: 'developers/arch',
+        title: 'Architecture',
+        body: '',
+      },
+    ])
+    const overview = text.split('## Developers')[0]
+    expect(overview).not.toContain('Quick start')
+    expect(text.split('## Developers')[1]).toContain(
+      '[Quick start](https://d/acta/developers/)',
+    )
+  })
 })
 
 describe('defineNubiscoDocs', () => {
